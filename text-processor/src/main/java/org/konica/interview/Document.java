@@ -1,9 +1,10 @@
 package org.konica.interview;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Document {
     private String content;
@@ -11,7 +12,7 @@ public class Document {
     private Integer paragraphMaxLength;
     private Integer paragraphMinLength;
     private Integer paragraphAvgLength;
-    private HashMap<String, Integer> wordFrequency;
+    private HashMap<String, Long> wordFrequency;
     private ArrayList<String> paragraphs;
 
     public Document(String content) {
@@ -57,7 +58,7 @@ public class Document {
         return paragraphAvgLength;
     }
 
-    public HashMap<String, Integer> getWordFrequency() {
+    public HashMap<String, Long> getWordFrequency() {
         if (wordFrequency == null) {
             wordFrequency = new HashMap<>();
             parseWordFrequency();
@@ -93,6 +94,19 @@ public class Document {
     }
 
     private void parseWordFrequency() {
-        wordFrequency.put("gregos", 1);
+        for (String p : paragraphs) {
+            String[] words = p.split("\\W+");
+            for (String word : words) {
+                Long freq = wordFrequency.get(word);
+                freq = freq == null ? 1 : ++freq;
+                wordFrequency.put(word, freq);
+            }
+        }
+
+        wordFrequency = wordFrequency
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
     }
 }

@@ -74,7 +74,7 @@ public class TextProcessor {
 
     private static Object wordFrequency(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return "Not yet implemented\n";
+        return document.getWordFrequency().toString() + "\n";
     }
 
     private static Object saveDocument(Request request, Response response) throws IOException {
