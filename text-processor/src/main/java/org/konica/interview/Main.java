@@ -1,11 +1,14 @@
 package org.konica.interview;
 
 
-import static spark.Spark.get;
-import static spark.Spark.put;
-import static spark.Spark.post;
+import spark.Service;
 
 import java.io.*;
+
+import static spark.Spark.put;
+import static spark.Spark.post;
+import static spark.Spark.get;
+import static spark.Spark.delete;
 
 /*
     // matches "GET /hello/foo" and "GET /hello/bar"
@@ -28,23 +31,22 @@ public class Main {
         String textExtractorLocation = "http://localhost:9998/tika";
         String documentStoreLocation = "mongodb://localhost:27017";
 
-        TextProcessor.init(textExtractorLocation, documentStoreLocation);
+        BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorLocation);
+        PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorLocation, documentStoreLocation);
 
-        put("/stats/paragraph/count",               TextProcessor.paragraphCount);
-        put("/stats/paragraph/length/max",          TextProcessor.paragraphLengthMax);
-        put("/stats/paragraph/length/min",          TextProcessor.paragraphLengthMin);
-        put("/stats/paragraph/length/avg",          TextProcessor.paragraphLengthAvg);
-        put("/stats/word/frequency",                TextProcessor.wordFrequency);
+        put("/stats/paragraph/count",               basicTextProcessor::paragraphCount);
+        put("/stats/paragraph/length/max",          basicTextProcessor::paragraphLengthMax);
+        put("/stats/paragraph/length/min",          basicTextProcessor::paragraphLengthMin);
+        put("/stats/paragraph/length/avg",          basicTextProcessor::paragraphLengthAvg);
+        put("/stats/word/frequency",                basicTextProcessor::wordFrequency);
 
-        post("/document",                           TextProcessor.saveDocument);
-        get("/document/:id/paragraph/count",        TextProcessor.paragraphCount);
-        get("/document/:id/paragraph/length/max",   TextProcessor.paragraphLengthMax);
-        get("/document/:id/paragraph/length/min",   TextProcessor.paragraphLengthMin);
-        get("/document/:id/paragraph/length/avg",   TextProcessor.paragraphLengthAvg);
-        get("/document/:id/word/frequency",         TextProcessor.wordFrequency);
-
-        // delete("/document/:id", TextProcessor.deleteDocument);
-        // put("/document/:id", TextProcessor.updateDocument);
+        post("/document",                           persistentTextProcessor::saveDocument);
+        get("/document/:id/paragraph/count",        persistentTextProcessor::paragraphCount);
+        get("/document/:id/paragraph/length/max",   persistentTextProcessor::paragraphLengthMax);
+        get("/document/:id/paragraph/length/min",   persistentTextProcessor::paragraphLengthMin);
+        get("/document/:id/paragraph/length/avg",   persistentTextProcessor::paragraphLengthAvg);
+        get("/document/:id/word/frequency",         persistentTextProcessor::wordFrequency);
+        delete("/document/:id",                     persistentTextProcessor::deleteDocument);
     }
 
     static void printHelp() {
