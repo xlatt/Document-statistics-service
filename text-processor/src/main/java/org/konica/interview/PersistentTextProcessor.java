@@ -14,58 +14,45 @@ public class PersistentTextProcessor extends TextProcessor {
         documentStore = new DocumentStore(documentStoreLocation);
     }
 
-    private Document loadDocument(Request request, Response response) {
-        // TODO
-        //  1. load UUID from request
-        //  2. check if Document is present in cache.
-        //      2.1 if yes, load and return
-        //  3. check if Document is in DB
-        //      3.1 if yes, load and transform from JSON to Document and return
-        // return documentCache.get(uuid) ? null : documentStore.get(uuid)
-        return new Document("EMPTY PICO");
+    private Document loadDocument(Request request, Response response) throws IOException {
+        UUID uuid = UUID.fromString(request.params(":id"));
+        System.out.println("Going to load document with UUID" + uuid.toString());
+        return documentStore.get(uuid);
     }
 
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
-        return document.getParagraphCount().toString() + "\n";
+        return document.parseParagraphCount().toString() + "\n";
     }
 
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
-        return document.getParagraphMaxLength().toString() + "\n";
+        return document.parseParagraphMaxLength().toString() + "\n";
     }
 
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
-        return document.getParagraphMinLength().toString() + "\n";
+        return document.parseParagraphMinLength().toString() + "\n";
     }
 
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
-        return document.getParagraphAvgLength().toString() + "\n";
+        return document.parseParagraphAvgLength().toString() + "\n";
     }
 
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
-        return document.getWordFrequency().toString() + "\n";
+        return document.parseWordFrequency().toString() + "\n";
     }
 
     public Object saveDocument(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        // TODO
-        //  1. insert Document into cache
-        //      1.1 after two seconds of class being not used serialize it and save to DB.
-        //      1.2 delete object from cache
-        //  2. Insert in to DB
-        return "Not yet implemented\n";
+        return documentStore.store(document).toString();
     }
 
     public Object deleteDocument(Request request, Response response) throws IOException {
-        // TODO
-        //  1. check if Document in cache.
-        //      1.2 if yes, delete
-        //  2. check if Document in DB
-        //      2.1 if yes, delete
-        return "Not yet implemented\n";
+        UUID uuid = UUID.fromString(request.params(":id"));
+        documentStore.delete(uuid);
+        return "Done\n";
     }
 }
