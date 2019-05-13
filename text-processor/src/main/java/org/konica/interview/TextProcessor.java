@@ -1,5 +1,7 @@
 package org.konica.interview;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.Request;
 import spark.Response;
 
@@ -7,13 +9,22 @@ import java.io.IOException;
 
 public abstract class TextProcessor {
     protected TextExtractor textExtractor;
+    protected ObjectMapper mapper;
 
     protected static final String TEXT_PDF   = "text/pdf";
     protected static final String TEXT_PLAIN = "text/plain";
     protected static final String TEXT_WORD  = "text/word";
 
+    protected static final String PARAGRAPH_COUNT = "ParagraphCount";
+    protected static final String PARAGRAPH_LEN_MAX = "ParagraphLengthMax";
+    protected static final String PARAGRAPH_LEN_MIN = "ParagraphLengthMin";
+    protected static final String PARAGRAPH_LEN_AVG = "ParagraphLengthAvg";
+    protected static final String WORD_FREQENCY = "WordFrequency";
+    protected static final String DOCUMENT_UUID = "Uuid";
+
     public TextProcessor(String textExtractorLocation) throws IOException {
         textExtractor = new TextExtractor(textExtractorLocation);
+        mapper = new ObjectMapper();
     }
 
     protected Document extractByContent(Request request, String type) throws IOException {
@@ -37,6 +48,12 @@ public abstract class TextProcessor {
     protected Document createDocument(Request request, Response response) throws IOException {
         String contentType = request.headers("Content-Type");
         return extractByContent(request, contentType);
+    }
+
+    public String toJson(String name, String value) {
+        ObjectNode objectNode1 = mapper.createObjectNode();
+        objectNode1.put(name, value);
+        return objectNode1.toString();
     }
 
     public abstract Object paragraphCount(Request request, Response response) throws IOException;

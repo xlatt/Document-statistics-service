@@ -1,5 +1,6 @@
 package org.konica.interview;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import spark.Request;
 import spark.Response;
 
@@ -12,26 +13,31 @@ public class BasicTextProcessor extends TextProcessor {
 
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = super.createDocument(request, response);
-        return document.parseParagraphCount().toString() + "\n";
+        String val = document.parseParagraphCount().toString();
+        return toJson(PARAGRAPH_COUNT, val);
     }
 
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.parseParagraphMaxLength().toString() + "\n";
+        String val =  document.parseParagraphMaxLength().toString();
+        return  toJson(PARAGRAPH_LEN_MAX, val);
     }
 
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.parseParagraphMinLength().toString() + "\n";
+        String val = document.parseParagraphMinLength().toString();
+        return toJson(PARAGRAPH_LEN_MIN, val);
     }
 
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.parseParagraphAvgLength().toString() + "\n";
+        String val = document.parseParagraphAvgLength().toString();
+        return toJson(PARAGRAPH_LEN_AVG, val);
     }
 
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.parseWordFrequency().toString() + "\n";
+        String val = document.parseWordFrequency().toString();
+        return toJson(WORD_FREQENCY, val);
     }
 }
