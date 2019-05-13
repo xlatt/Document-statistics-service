@@ -12,26 +12,26 @@ public class BasicTextProcessor extends TextProcessor {
 
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = super.createDocument(request, response);
-        return document.getParagraphCount().toString() + "\n";
+        return document.parseParagraphCount().toString() + "\n";
     }
 
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.getParagraphMaxLength().toString() + "\n";
+        return document.parseParagraphMaxLength().toString() + "\n";
     }
 
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.getParagraphMinLength().toString() + "\n";
+        return document.parseParagraphMinLength().toString() + "\n";
     }
 
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.getParagraphAvgLength().toString() + "\n";
+        return document.parseParagraphAvgLength().toString() + "\n";
     }
 
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
-        return document.getWordFrequency().toString() + "\n";
+        return document.parseWordFrequency().toString() + "\n";
     }
 }
