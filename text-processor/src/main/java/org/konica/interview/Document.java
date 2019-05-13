@@ -1,9 +1,6 @@
 package org.konica.interview;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Document {
@@ -14,6 +11,40 @@ public class Document {
     private Integer paragraphAvgLength;
     private HashMap<String, Long> wordFrequency;
     private ArrayList<String> paragraphs;
+
+    public void setParagraphCount(Integer paragraphCount) {
+        this.paragraphCount = paragraphCount;
+    }
+
+    public void setParagraphMaxLength(Integer paragraphMaxLength) {
+        this.paragraphMaxLength = paragraphMaxLength;
+    }
+
+    public void setParagraphMinLength(Integer paragraphMinLength) {
+        this.paragraphMinLength = paragraphMinLength;
+    }
+
+    public void setParagraphAvgLength(Integer paragraphAvgLength) {
+        this.paragraphAvgLength = paragraphAvgLength;
+    }
+
+    public void setWordFrequency(HashMap<String, Long> wordFrequency) {
+        this.wordFrequency = wordFrequency;
+    }
+
+    public void setParagraphs(ArrayList<String> paragraphs) {
+        this.paragraphs = paragraphs;
+    }
+
+    public Document() {
+        this.content = null;
+        this.paragraphCount = Integer.MIN_VALUE;
+        this.paragraphMaxLength = Integer.MIN_VALUE;
+        this.paragraphMinLength = Integer.MIN_VALUE;
+        this.paragraphAvgLength = Integer.MIN_VALUE;
+        this.wordFrequency = null;
+        this.paragraphs = null;
+    }
 
     public Document(String content) {
         this.content = content;
@@ -27,73 +58,65 @@ public class Document {
     }
 
     public Integer getParagraphCount() {
-        if (paragraphCount == Integer.MIN_VALUE) {
-            parseParagraphCount();
-        }
-
         return paragraphCount;
     }
 
     public Integer getParagraphMaxLength() {
-        if (paragraphMaxLength == Integer.MIN_VALUE) {
-            parseParagraphMaxLength();
-        }
-
         return paragraphMaxLength;
     }
 
     public Integer getParagraphMinLength() {
-        if (paragraphMinLength == Integer.MIN_VALUE) {
-            parseParagraphMinLength();
-        }
-
         return paragraphMinLength;
     }
 
     public Integer getParagraphAvgLength() {
-        if (paragraphAvgLength == Integer.MIN_VALUE) {
-            parseParagraphAvgLength();
-        }
-
         return paragraphAvgLength;
     }
 
     public HashMap<String, Long> getWordFrequency() {
-        if (wordFrequency == null) {
-            wordFrequency = new HashMap<>();
-            parseWordFrequency();
-        }
-
         return wordFrequency;
     }
 
+    public ArrayList<String> getParagraphs() {
+        return paragraphs;
+    }
+
     private void splitByParagraphs() {
+        if (content == null)
+            return;
+
         String[] p = content.split("\n");
         paragraphs = new ArrayList<>(Arrays.asList(p));
 
         paragraphs.removeIf(String::isEmpty);
     }
 
-    private void parseParagraphCount() {
+    public Integer parseParagraphCount() {
         paragraphCount = paragraphs.size();
+        return paragraphCount;
     }
 
-    private void parseParagraphMaxLength() {
+    public Integer parseParagraphMaxLength() {
         String longest = paragraphs.stream().max(Comparator.comparingInt(String::length)).get();
         System.out.println(longest);
         paragraphMaxLength = longest.length();
+        return paragraphMaxLength;
     }
 
-    private void parseParagraphMinLength() {
+    public Integer parseParagraphMinLength() {
         String longest = paragraphs.stream().min(Comparator.comparingInt(String::length)).get();
         paragraphMinLength = longest.length();
+        return paragraphMinLength;
     }
 
-    private void parseParagraphAvgLength() {
-        paragraphAvgLength = paragraphs.stream().mapToInt(String::length).sum() / getParagraphCount();
+    public Integer parseParagraphAvgLength() {
+        paragraphAvgLength = paragraphs.stream().mapToInt(String::length).sum() / parseParagraphCount();
+        return paragraphAvgLength;
     }
 
-    private void parseWordFrequency() {
+    public ArrayList<Map.Entry<String, Long>> parseWordFrequency() {
+        wordFrequency = new HashMap<>();
+
         for (String p : paragraphs) {
             String[] words = p.split("\\W+");
             for (String word : words) {
@@ -103,10 +126,13 @@ public class Document {
             }
         }
 
-        wordFrequency = wordFrequency
+        Stream<Map.Entry<String, Long>> s=  wordFrequency
                 .entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        ArrayList<Map.Entry<String, Long>> sorted = new ArrayList<>();
+        s.forEach(v->sorted.add(new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue())));
+
+        return sorted;
     }
 }
