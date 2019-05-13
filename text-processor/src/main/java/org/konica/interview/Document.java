@@ -1,6 +1,7 @@
 package org.konica.interview;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Document {
@@ -114,7 +115,7 @@ public class Document {
         return paragraphAvgLength;
     }
 
-    public ArrayList<Map.Entry<String, Long>> parseWordFrequency() {
+    public HashMap<String, Long> parseWordFrequency() {
         wordFrequency = new HashMap<>();
 
         for (String p : paragraphs) {
@@ -126,13 +127,20 @@ public class Document {
             }
         }
 
-        Stream<Map.Entry<String, Long>> s=  wordFrequency
+//        Stream<Map.Entry<String, Long>> s=  wordFrequency
+//                .entrySet()
+//                .stream()
+//                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+//        ArrayList<Map.Entry<String, Long>> sorted = new ArrayList<>();
+//        s.forEach(v->sorted.add(new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue())));
+//
+//        wordFrequency =
+//        return sorted;
+        wordFrequency = wordFrequency
                 .entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-        ArrayList<Map.Entry<String, Long>> sorted = new ArrayList<>();
-        s.forEach(v->sorted.add(new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue())));
-
-        return sorted;
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
+        return wordFrequency;
     }
 }
