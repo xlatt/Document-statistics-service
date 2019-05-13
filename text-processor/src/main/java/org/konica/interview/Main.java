@@ -1,8 +1,5 @@
 package org.konica.interview;
 
-
-import spark.Service;
-
 import java.io.*;
 
 import static spark.Spark.put;
@@ -28,11 +25,11 @@ public class Main {
             return;
         }
 
-        String textExtractorLocation = "http://localhost:9998/tika";
-        String documentStoreLocation = "mongodb://localhost:27017";
+        String textExtractorUrl = "http://localhost:9998/tika";
+        String documentStoreUrl = "mongodb://localhost:27017";
 
-        BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorLocation);
-        PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorLocation, documentStoreLocation);
+        BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorUrl);
+        PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorUrl, documentStoreUrl);
 
         put("/stats/paragraph/count",               basicTextProcessor::paragraphCount);
         put("/stats/paragraph/length/max",          basicTextProcessor::paragraphLengthMax);
