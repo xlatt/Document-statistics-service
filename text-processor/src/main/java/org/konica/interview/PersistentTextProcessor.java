@@ -8,12 +8,10 @@ import java.util.UUID;
 
 public class PersistentTextProcessor extends TextProcessor {
     private static DocumentStore documentStore;
-    private static DocumentCache documentCache;
 
     public PersistentTextProcessor(String textExtractorLocation, String documentStoreLocation) throws IOException {
         super(textExtractorLocation);
         documentStore = new DocumentStore(documentStoreLocation);
-        documentCache = new DocumentCache();
     }
 
     private Document loadDocument(Request request, Response response) {
@@ -23,6 +21,7 @@ public class PersistentTextProcessor extends TextProcessor {
         //      2.1 if yes, load and return
         //  3. check if Document is in DB
         //      3.1 if yes, load and transform from JSON to Document and return
+        // return documentCache.get(uuid) ? null : documentStore.get(uuid)
         return new Document("EMPTY PICO");
     }
 
@@ -57,6 +56,7 @@ public class PersistentTextProcessor extends TextProcessor {
         //  1. insert Document into cache
         //      1.1 after two seconds of class being not used serialize it and save to DB.
         //      1.2 delete object from cache
+        //  2. Insert in to DB
         return "Not yet implemented\n";
     }
 
