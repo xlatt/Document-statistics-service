@@ -6,12 +6,16 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;;
 import org.bson.Document;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class DocumentStore {
     private DocumentCache cache;
+    private MongoCollection<org.bson.Document> db;
 
     public class CacheInvalidator implements Runnable {
         private int ttl;
@@ -39,6 +43,7 @@ public class DocumentStore {
         Thread cacheInvalidator = new Thread(new CacheInvalidator(5));
         cacheInvalidator.start();
 
+        //coll.find().forEach(printBlock);
         Block<Document> printBlock = new Block<org.bson.Document>() {
             @Override
             public void apply(final org.bson.Document document) {
@@ -47,9 +52,8 @@ public class DocumentStore {
         };
 
         MongoClient mongoClient = MongoClients.create(location);
-        MongoDatabase database = mongoClient.getDatabase("documents");
-        MongoCollection<org.bson.Document> coll = database.getCollection("content");
-        coll.find().forEach(printBlock);
+        MongoDatabase db = mongoClient.getDatabase("documents");
+        this.db = db.getCollection("content");
     }
 
     public void update(UUID uuid, org.konica.interview.Document document) {
@@ -66,13 +70,16 @@ public class DocumentStore {
 
     private void storeDb(UUID uuid, org.konica.interview.Document document) {
         System.out.println("Storting to db " + uuid.toString());
-        // store in db
+        db.insertOne(new Document(uuid.toString(), document.toString()));
     }
 
     public org.konica.interview.Document get(UUID uuid) {
         org.konica.interview.Document document = cache.get(uuid);
 
-        // get from DB if null
+        if (document == null) {
+            org.bson.Document d = this.db.find(new org.bson.Document()).first();
+            // document =  deserialize object
+        }
         return document;
     }
 }
