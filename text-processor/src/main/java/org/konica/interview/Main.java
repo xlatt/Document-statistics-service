@@ -7,16 +7,6 @@ import static spark.Spark.post;
 import static spark.Spark.get;
 import static spark.Spark.delete;
 
-/*
-    // matches "GET /hello/foo" and "GET /hello/bar"
-    // request.params(":name") is 'foo' or 'bar'
-
-    get("/document/:id", (request, response) -> {
-        return "Doc id is : " + request.params(":id");
-    });
-
-**/
-
 public class Main {
     public static void main(String[] args) throws IOException {
 
