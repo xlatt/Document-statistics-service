@@ -28,6 +28,7 @@ public class Main {
         put("/stats/word/frequency",                basicTextProcessor::wordFrequency);
 
         post("/document",                           persistentTextProcessor::saveDocument);
+        get("/document/:id",                        persistentTextProcessor::parseAll);
         get("/document/:id/paragraph/count",        persistentTextProcessor::paragraphCount);
         get("/document/:id/paragraph/length/max",   persistentTextProcessor::paragraphLengthMax);
         get("/document/:id/paragraph/length/min",   persistentTextProcessor::paragraphLengthMin);
