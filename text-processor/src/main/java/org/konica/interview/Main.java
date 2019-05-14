@@ -1,5 +1,7 @@
 package org.konica.interview;
 
+import org.apache.commons.cli.*;
+
 import java.io.*;
 
 import static spark.Spark.put;
@@ -8,15 +10,11 @@ import static spark.Spark.get;
 import static spark.Spark.delete;
 
 public class Main {
+    private static String textExtractorUrl = "http://localhost:9998/tika";
+    private static String documentStoreUrl = "mongodb://localhost:27017";
+
     public static void main(String[] args) throws IOException {
-
-        if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help"))) {
-            printHelp();
-            return;
-        }
-
-        String textExtractorUrl = "http://localhost:9998/tika";
-        String documentStoreUrl = "mongodb://localhost:27017";
+        processArgs(args);
 
         BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorUrl);
         PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorUrl, documentStoreUrl);
@@ -37,13 +35,31 @@ public class Main {
         delete("/document/:id",                     persistentTextProcessor::deleteDocument);
     }
 
-    static void printHelp() {
-        System.out.println("text-processor:" +
-                "\n\tjava -jar text-processor.jar [args]" +
-                "\n\targs:" +
-                "\n\t\t--tika <address> - URL of Tika server" +
-                "\n\t\t--db <address> - URL of DB server" +
-                "\n\t\t-h | --help - Display this help");
+    static void processArgs(String[] args) {
+        Options options = new Options();
+
+        Option input = new Option("t", "tika", true, "URL of Tika server");
+        input.setRequired(true);
+        options.addOption(input);
+
+        Option output = new Option("db", "database", true, "URL of Database server");
+        output.setRequired(true);
+        options.addOption(output);
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd;
+
+        try {
+            cmd = parser.parse(options, args);
+            textExtractorUrl = cmd.getOptionValue("tika");
+            documentStoreUrl = cmd.getOptionValue("database");
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            formatter.printHelp("text-processor", options);
+
+            System.exit(1);
+        }
     }
 }
 
