@@ -38,7 +38,12 @@ public class Main {
     }
 
     static void printHelp() {
-        System.out.println("help");
+        System.out.println("text-processor:" +
+                "\n\tjava -jar text-processor.jar [args]" +
+                "\n\targs:" +
+                "\n\t\t--tika <address> - URL of Tika server" +
+                "\n\t\t--db <address> - URL of DB server" +
+                "\n\t\t-h | --help - Display this help");
     }
 }
 
