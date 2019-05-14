@@ -22,13 +22,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object parseAll(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
 
-        document.parseParagraphCount();
-        document.parseParagraphMaxLength();
-        document.parseParagraphMinLength();
-        document.parseParagraphAvgLength();
-        document.parseWordFrequency();
-
-        return mapper.writer(excp).writeValueAsString(document);
+        return super.parseAll(document);
     }
 
     public Object paragraphCount(Request request, Response response) throws IOException {

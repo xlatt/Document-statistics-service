@@ -25,6 +25,7 @@ public class Main {
         BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorUrl);
         PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorUrl, documentStoreUrl);
 
+        put("/stats",                               basicTextProcessor::parseAll);
         put("/stats/paragraph/count",               basicTextProcessor::paragraphCount);
         put("/stats/paragraph/length/max",          basicTextProcessor::paragraphLengthMax);
         put("/stats/paragraph/length/min",          basicTextProcessor::paragraphLengthMin);

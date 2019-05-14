@@ -10,6 +10,16 @@ public class BasicTextProcessor extends TextProcessor {
         super(textExtractorLocation);
     }
 
+    public Object parseAll(Request request, Response response) throws IOException {
+        Document document = super.createDocument(request, response);
+        if (document == null) {
+            response.status(INTERNAL_ERROR);
+            return "";
+        }
+
+        return super.parseAll(document);
+    }
+
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = super.createDocument(request, response);
         if (document == null) {

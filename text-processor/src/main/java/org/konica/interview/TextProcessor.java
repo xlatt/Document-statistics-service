@@ -74,6 +74,16 @@ public abstract class TextProcessor {
         return objectNode1.toString();
     }
 
+    public Object parseAll(Document document) throws IOException {
+        document.parseParagraphCount();
+        document.parseParagraphMaxLength();
+        document.parseParagraphMinLength();
+        document.parseParagraphAvgLength();
+        document.parseWordFrequency();
+
+        return mapper.writer(excp).writeValueAsString(document);
+    }
+
     public abstract Object paragraphCount(Request request, Response response) throws IOException;
 
     public abstract Object paragraphLengthMax(Request request, Response response) throws IOException;
