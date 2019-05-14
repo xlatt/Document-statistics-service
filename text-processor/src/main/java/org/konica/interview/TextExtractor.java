@@ -15,19 +15,19 @@ public class TextExtractor {
     }
 
     public String bytesToText(byte [] bytes) throws IOException {
-        HttpURLConnection pdfConnector;
+        HttpURLConnection connection;
 
-        pdfConnector = (HttpURLConnection) this.url.openConnection();
-        pdfConnector.setDoOutput(true);
-        pdfConnector.setRequestMethod("PUT");
-        pdfConnector.setRequestProperty("Accept", "text/plain");
+        connection = (HttpURLConnection) this.url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Accept", "text/plain");
 
-        DataOutputStream wr = new DataOutputStream (pdfConnector.getOutputStream ());
+        DataOutputStream wr = new DataOutputStream (connection.getOutputStream());
         wr.write(bytes);
-        wr.flush ();
-        wr.close ();
+        wr.flush();
+        wr.close();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(pdfConnector.getInputStream()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String line;
         StringBuilder builder = new StringBuilder();
 
