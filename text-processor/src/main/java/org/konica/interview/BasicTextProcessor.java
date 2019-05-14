@@ -37,6 +37,6 @@ public class BasicTextProcessor extends TextProcessor {
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         String val = document.parseWordFrequency().toString();
-        return toJson(WORD_FREQENCY, val);
+        return toJson(WORD_FREQUENCY, val);
     }
 }

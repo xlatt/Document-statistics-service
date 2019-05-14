@@ -20,7 +20,7 @@ public abstract class TextProcessor {
     protected static final String PARAGRAPH_LEN_MAX = "ParagraphLengthMax";
     protected static final String PARAGRAPH_LEN_MIN = "ParagraphLengthMin";
     protected static final String PARAGRAPH_LEN_AVG = "ParagraphLengthAvg";
-    protected static final String WORD_FREQENCY = "WordFrequency";
+    protected static final String WORD_FREQUENCY = "WordFrequency";
     protected static final String DOCUMENT_UUID = "Uuid";
 
     public TextProcessor(String textExtractorLocation) throws IOException {

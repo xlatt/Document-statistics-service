@@ -58,7 +58,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         String val = document.parseWordFrequency().toString();
-        return toJson(WORD_FREQENCY, val);
+        return toJson(WORD_FREQUENCY, val);
     }
 
     public Object saveDocument(Request request, Response response) throws IOException {
