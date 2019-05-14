@@ -37,12 +37,12 @@ public class Main {
         BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorUrl);
         PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorUrl, documentStoreUrl);
 
-        put("/stats",                               basicTextProcessor::parseAll);
-        put("/stats/paragraph/count",               basicTextProcessor::paragraphCount);
-        put("/stats/paragraph/length/max",          basicTextProcessor::paragraphLengthMax);
-        put("/stats/paragraph/length/min",          basicTextProcessor::paragraphLengthMin);
-        put("/stats/paragraph/length/avg",          basicTextProcessor::paragraphLengthAvg);
-        put("/stats/word/frequency",                basicTextProcessor::wordFrequency);
+        put("/document",                            basicTextProcessor::parseAll);
+        put("/document/paragraph/count",            basicTextProcessor::paragraphCount);
+        put("/document/paragraph/length/max",       basicTextProcessor::paragraphLengthMax);
+        put("/document/paragraph/length/min",       basicTextProcessor::paragraphLengthMin);
+        put("/document/paragraph/length/avg",       basicTextProcessor::paragraphLengthAvg);
+        put("/document/word/frequency",             basicTextProcessor::wordFrequency);
 
         post("/document",                           persistentTextProcessor::saveDocument);
         get("/document/:id",                        persistentTextProcessor::parseAll);
