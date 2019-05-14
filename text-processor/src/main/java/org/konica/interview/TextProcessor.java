@@ -70,7 +70,7 @@ public abstract class TextProcessor {
         return document;
     }
 
-    protected Document createDocument(Request request, Response response) throws IOException {
+    protected Document createDocument(Request request) throws IOException {
         String contentType = request.headers("Content-Type");
         return extractByContent(request, contentType);
     }
@@ -91,13 +91,28 @@ public abstract class TextProcessor {
         return mapper.writer(excp).writeValueAsString(document);
     }
 
-    public abstract Object paragraphCount(Request request, Response response) throws IOException;
+    public Object paragraphCount(Document document){
+        String val = document.parseParagraphCount().toString();
+        return toJson(PARAGRAPH_COUNT, val);
+    }
 
-    public abstract Object paragraphLengthMax(Request request, Response response) throws IOException;
+    public Object paragraphLengthMax(Document document) {
+        String val =  document.parseParagraphMaxLength().toString();
+        return  toJson(PARAGRAPH_LEN_MAX, val);
+    }
 
-    public abstract Object paragraphLengthMin(Request request, Response response) throws IOException;
+    public Object paragraphLengthMin(Document document) {
+        String val = document.parseParagraphMinLength().toString();
+        return toJson(PARAGRAPH_LEN_MIN, val);
+    }
 
-    public abstract Object paragraphLengthAvg(Request request, Response response) throws IOException;
+    public Object paragraphLengthAvg(Document document) {
+        String val = document.parseParagraphAvgLength().toString();
+        return toJson(PARAGRAPH_LEN_AVG, val);
+    }
 
-    public abstract Object wordFrequency(Request request, Response response) throws IOException;
+    public Object wordFrequency(Document document) {
+        String val = document.parseWordFrequency().toString();
+        return toJson(WORD_FREQUENCY, val);
+    }
 }

@@ -13,7 +13,7 @@ public class BasicTextProcessor extends TextProcessor {
     }
 
     public Object parseAll(Request request, Response response) throws IOException {
-        Document document = super.createDocument(request, response);
+        Document document = super.createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
@@ -24,62 +24,57 @@ public class BasicTextProcessor extends TextProcessor {
     }
 
     public Object paragraphCount(Request request, Response response) throws IOException {
-        Document document = super.createDocument(request, response);
+        Document document = super.createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
 
-        String val = document.parseParagraphCount().toString();
-        return toJson(PARAGRAPH_COUNT, val);
+        return super.paragraphCount(document);
     }
 
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
-        Document document = createDocument(request, response);
+        Document document = createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
 
-        String val =  document.parseParagraphMaxLength().toString();
-        return  toJson(PARAGRAPH_LEN_MAX, val);
+        return super.paragraphLengthMax(document);
     }
 
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
-        Document document = createDocument(request, response);
+        Document document = createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
 
-        String val = document.parseParagraphMinLength().toString();
-        return toJson(PARAGRAPH_LEN_MIN, val);
+        return super.paragraphLengthMin(document);
     }
 
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
-        Document document = createDocument(request, response);
+        Document document = createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
 
-        String val = document.parseParagraphAvgLength().toString();
-        return toJson(PARAGRAPH_LEN_AVG, val);
+        return super.paragraphLengthAvg(document);
     }
 
     public Object wordFrequency(Request request, Response response) throws IOException {
-        Document document = createDocument(request, response);
+        Document document = createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
 
-        String val = document.parseWordFrequency().toString();
-        return toJson(WORD_FREQUENCY, val);
+        return super.wordFrequency(document);
     }
 }

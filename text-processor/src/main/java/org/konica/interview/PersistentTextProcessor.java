@@ -16,13 +16,13 @@ public class PersistentTextProcessor extends TextProcessor {
         logger = LoggerFactory.getLogger(PersistentTextProcessor.class);
     }
 
-    private Document loadDocument(Request request, Response response) throws IOException {
+    private Document loadDocument(Request request) throws IOException {
         UUID uuid = UUID.fromString(request.params(":id"));
         return documentStore.get(uuid);
     }
 
     public Object parseAll(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
@@ -33,67 +33,62 @@ public class PersistentTextProcessor extends TextProcessor {
     }
 
     public Object paragraphCount(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
 
-        String val = document.parseParagraphCount().toString();
-        return toJson(PARAGRAPH_COUNT, val);
+        return super.paragraphCount(document);
     }
 
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
 
-        String val = document.parseParagraphMaxLength().toString();
-        return toJson(PARAGRAPH_LEN_MAX, val);
+        return super.paragraphLengthMax(document);
     }
 
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
 
-        String val = document.parseParagraphMinLength().toString();
-        return toJson(PARAGRAPH_LEN_MIN, val);
+        return super.paragraphLengthMin(document);
     }
 
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
 
-        String val = document.parseParagraphAvgLength().toString();
-        return toJson(PARAGRAPH_LEN_AVG, val);
+        return super.paragraphLengthAvg(document);
     }
 
     public Object wordFrequency(Request request, Response response) throws IOException {
-        Document document = loadDocument(request, response);
+        Document document = loadDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
 
-        String val = document.parseWordFrequency().toString();
-        return toJson(WORD_FREQUENCY, val);
+        return super.wordFrequency(document);
     }
 
     public Object saveDocument(Request request, Response response) throws IOException {
-        Document document = createDocument(request, response);
+        Document document = createDocument(request);
         if (document == null) {
             logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
