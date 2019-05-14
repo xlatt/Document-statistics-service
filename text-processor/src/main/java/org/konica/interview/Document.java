@@ -78,10 +78,6 @@ public class Document {
         return wordFrequency;
     }
 
-    public ArrayList<String> getParagraphs() {
-        return paragraphs;
-    }
-
     private void splitByParagraphs() {
         if (content == null)
             return;
@@ -127,20 +123,11 @@ public class Document {
             }
         }
 
-//        Stream<Map.Entry<String, Long>> s=  wordFrequency
-//                .entrySet()
-//                .stream()
-//                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-//        ArrayList<Map.Entry<String, Long>> sorted = new ArrayList<>();
-//        s.forEach(v->sorted.add(new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue())));
-//
-//        wordFrequency =
-//        return sorted;
         wordFrequency = wordFrequency
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         return wordFrequency;
     }
 }
