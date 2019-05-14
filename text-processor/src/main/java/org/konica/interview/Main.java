@@ -1,13 +1,19 @@
 package org.konica.interview;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
-import java.io.*;
+import java.io.IOException;
 
-import static spark.Spark.put;
-import static spark.Spark.post;
-import static spark.Spark.get;
 import static spark.Spark.delete;
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.put;
 
 public class Main {
     private static String textExtractorUrl = "http://localhost:9998/tika";

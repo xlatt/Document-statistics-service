@@ -1,10 +1,9 @@
 package org.konica.interview;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
 
 public class BasicTextProcessor extends TextProcessor {
     public BasicTextProcessor(String textExtractorLocation) throws IOException {

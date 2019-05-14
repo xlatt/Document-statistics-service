@@ -1,11 +1,12 @@
 package org.konica.interview;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import spark.Request;
 import spark.Response;
-
-import java.io.IOException;
 
 public abstract class TextProcessor {
     protected TextExtractor textExtractor;

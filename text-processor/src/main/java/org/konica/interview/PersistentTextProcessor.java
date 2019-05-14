@@ -1,10 +1,10 @@
 package org.konica.interview;
 
-import spark.Request;
-import spark.Response;
-
 import java.io.IOException;
 import java.util.UUID;
+
+import spark.Request;
+import spark.Response;
 
 public class PersistentTextProcessor extends TextProcessor {
     private static DocumentStore documentStore;
