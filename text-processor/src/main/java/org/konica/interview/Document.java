@@ -1,5 +1,7 @@
 package org.konica.interview;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -8,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@JsonFilter("Document")
 public class Document {
     private String content;
     private Integer paragraphCount;

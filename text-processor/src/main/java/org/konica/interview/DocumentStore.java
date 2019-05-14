@@ -2,6 +2,9 @@ package org.konica.interview;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -19,6 +22,7 @@ public class DocumentStore {
     private DocumentCache cache;
     private MongoCollection<org.bson.Document> db;
     private ObjectMapper objectMapper;
+    private FilterProvider all;
 
     public class CacheInvalidator implements Runnable {
         private int ttl;
@@ -54,8 +58,12 @@ public class DocumentStore {
     }
 
     public DocumentStore(String location) {
+        SimpleBeanPropertyFilter propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("");
+        all = new SimpleFilterProvider().addFilter("Document", propertyFilter);
         objectMapper = new ObjectMapper();
+
         cache = new DocumentCache();
+
         Thread cacheInvalidator = new Thread(new CacheInvalidator(5));
         cacheInvalidator.start();
 
@@ -71,7 +79,7 @@ public class DocumentStore {
     }
 
     private void storeDb(UUID uuid, org.konica.interview.Document document) throws IOException {
-        String doc = objectMapper.writeValueAsString(document);
+        String doc = objectMapper.writer(all).writeValueAsString(document);
         db.updateOne(new Document("id", uuid.toString()), new Document("$set", new Document("content", doc)), new UpdateOptions().upsert(true));
     }
 

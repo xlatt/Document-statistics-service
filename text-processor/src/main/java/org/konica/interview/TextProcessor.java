@@ -5,6 +5,9 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import spark.Request;
 import spark.Response;
 
@@ -27,9 +30,19 @@ public abstract class TextProcessor {
     protected static final String WORD_FREQUENCY = "WordFrequency";
     protected static final String DOCUMENT_UUID = "Uuid";
 
+    protected SimpleBeanPropertyFilter propertyFilter;
+    protected FilterProvider excp;
+
     public TextProcessor(String textExtractorLocation) throws IOException {
         textExtractor = new TextExtractor(textExtractorLocation);
         mapper = new ObjectMapper();
+
+        // workaround to ensure Document class is loaded so that JSON fileter
+        // can be created
+        new Document();
+
+        propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("content", "paragraphs");
+        excp = new SimpleFilterProvider().addFilter("Document", propertyFilter);
     }
 
     protected Document extractByContent(Request request, String type) throws IOException {

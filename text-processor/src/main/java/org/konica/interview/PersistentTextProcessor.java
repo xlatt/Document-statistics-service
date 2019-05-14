@@ -28,7 +28,7 @@ public class PersistentTextProcessor extends TextProcessor {
         document.parseParagraphAvgLength();
         document.parseWordFrequency();
 
-        return mapper.writeValueAsString(document);
+        return mapper.writer(excp).writeValueAsString(document);
     }
 
     public Object paragraphCount(Request request, Response response) throws IOException {
