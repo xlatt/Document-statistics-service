@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 
 import java.io.IOException;
@@ -75,13 +76,13 @@ public class DocumentStore {
     }
 
 
-    public void delete(UUID uuid) {
-        cache.delete(uuid);
-        deleteFromDb(uuid);
+    public boolean delete(UUID uuid) {
+        return cache.delete(uuid) || deleteFromDb(uuid);
     }
 
-    private void deleteFromDb(UUID uuid) {
-        db.deleteOne(new Document("id", uuid.toString()));
+    private boolean deleteFromDb(UUID uuid) {
+        DeleteResult res = db.deleteOne(new Document("id", uuid.toString()));
+        return res.wasAcknowledged();
     }
 
     public org.konica.interview.Document get(UUID uuid) throws  IOException {
@@ -90,6 +91,7 @@ public class DocumentStore {
         if (document == null) {
             org.bson.Document d = this.db.find(new org.bson.Document("id", uuid.toString())).first();
 
+            if (d == null) return null;
 
             document = objectMapper.readValue(d.get("content").toString(), org.konica.interview.Document.class);
             cache.store(uuid, document);

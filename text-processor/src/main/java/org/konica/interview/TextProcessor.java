@@ -12,6 +12,10 @@ public abstract class TextProcessor {
     protected TextExtractor textExtractor;
     protected ObjectMapper mapper;
 
+    protected static final int OPERATION_ACCEPTED   = 202;
+    protected static final int NOT_FOUND            = 404;
+    protected static final int INTERNAL_ERROR       = 500;
+
     protected static final String TEXT_PDF   = "text/pdf";
     protected static final String TEXT_PLAIN = "text/plain";
     protected static final String TEXT_WORD  = "text/word";
