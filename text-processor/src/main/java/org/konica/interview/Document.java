@@ -106,7 +106,6 @@ public class Document {
 
     public Integer parseParagraphMaxLength() {
         String longest = paragraphs.stream().max(Comparator.comparingInt(String::length)).get();
-        System.out.println(longest);
         paragraphMaxLength = longest.length();
         return paragraphMaxLength;
     }

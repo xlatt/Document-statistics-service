@@ -8,6 +8,9 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import static spark.Spark.delete;
@@ -22,6 +25,8 @@ public class Main {
     private static String documentStoreUrl = "mongodb://localhost:27017";
     private static Integer threadCount;
     private static Integer sparkPort;
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException {
         processArgs(args);
@@ -78,12 +83,12 @@ public class Main {
             documentStoreUrl = cmd.getOptionValue("database");
 
             String w = cmd.getOptionValue("workers");
-            threadCount = w == null ? new Integer(4) : new Integer(w);
+            threadCount = w == null ? new Integer(6) : new Integer(w);
 
             String p = cmd.getOptionValue("port");
             sparkPort = p == null ? new Integer(4567) : new Integer(p);
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             formatter.printHelp("text-processor", options);
 
             System.exit(1);

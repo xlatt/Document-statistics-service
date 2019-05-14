@@ -2,17 +2,20 @@ package org.konica.interview;
 
 import java.io.IOException;
 
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
 public class BasicTextProcessor extends TextProcessor {
     public BasicTextProcessor(String textExtractorLocation) throws IOException {
         super(textExtractorLocation);
+        logger = LoggerFactory.getLogger(BasicTextProcessor.class);
     }
 
     public Object parseAll(Request request, Response response) throws IOException {
         Document document = super.createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
@@ -23,6 +26,7 @@ public class BasicTextProcessor extends TextProcessor {
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = super.createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
@@ -34,6 +38,7 @@ public class BasicTextProcessor extends TextProcessor {
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
@@ -45,6 +50,7 @@ public class BasicTextProcessor extends TextProcessor {
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
@@ -56,6 +62,7 @@ public class BasicTextProcessor extends TextProcessor {
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }
@@ -67,6 +74,7 @@ public class BasicTextProcessor extends TextProcessor {
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(INTERNAL_ERROR);
             return "";
         }

@@ -1,5 +1,8 @@
 package org.konica.interview;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,6 +36,8 @@ public abstract class TextProcessor {
     protected SimpleBeanPropertyFilter propertyFilter;
     protected FilterProvider excp;
 
+    protected Logger logger;
+
     public TextProcessor(String textExtractorLocation) throws IOException {
         textExtractor = new TextExtractor(textExtractorLocation);
         mapper = new ObjectMapper();
@@ -43,6 +48,8 @@ public abstract class TextProcessor {
 
         propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept("content", "paragraphs");
         excp = new SimpleFilterProvider().addFilter("Document", propertyFilter);
+
+        logger = LoggerFactory.getLogger(TextProcessor.class);
     }
 
     protected Document extractByContent(Request request, String type) throws IOException {
@@ -55,7 +62,7 @@ public abstract class TextProcessor {
             String content = request.body();
             document = new Document(content);
         } else {
-            System.out.println("[WARN] Unrecognized type of document. Trying extraction by Tika.");
+            logger.warn("[WARN] Unrecognized type of document. Trying extraction by Tika.");
             String content = textExtractor.bytesToText(request.bodyAsBytes());
             document = new Document(content);
         }

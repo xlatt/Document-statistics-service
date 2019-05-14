@@ -3,6 +3,7 @@ package org.konica.interview;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
@@ -12,6 +13,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public PersistentTextProcessor(String textExtractorLocation, String documentStoreLocation) throws IOException {
         super(textExtractorLocation);
         documentStore = new DocumentStore(documentStoreLocation);
+        logger = LoggerFactory.getLogger(PersistentTextProcessor.class);
     }
 
     private Document loadDocument(Request request, Response response) throws IOException {
@@ -21,6 +23,11 @@ public class PersistentTextProcessor extends TextProcessor {
 
     public Object parseAll(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
+        if (document == null) {
+            logger.error(request.uri() + " failed");
+            response.status(NOT_FOUND);
+            return "";
+        }
 
         return super.parseAll(document);
     }
@@ -28,6 +35,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object paragraphCount(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
@@ -39,6 +47,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object paragraphLengthMax(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
@@ -50,6 +59,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object paragraphLengthMin(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
@@ -61,6 +71,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object paragraphLengthAvg(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
@@ -72,6 +83,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object wordFrequency(Request request, Response response) throws IOException {
         Document document = loadDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
@@ -83,6 +95,7 @@ public class PersistentTextProcessor extends TextProcessor {
     public Object saveDocument(Request request, Response response) throws IOException {
         Document document = createDocument(request, response);
         if (document == null) {
+            logger.error(request.uri() + " failed");
             response.status(NOT_FOUND);
             return "";
         }
