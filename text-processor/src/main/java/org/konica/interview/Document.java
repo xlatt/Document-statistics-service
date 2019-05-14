@@ -20,6 +20,28 @@ public class Document {
     private HashMap<String, Long> wordFrequency;
     private ArrayList<String> paragraphs;
 
+    public Document() {
+        this.content = null;
+        this.paragraphCount = Integer.MIN_VALUE;
+        this.paragraphMaxLength = Integer.MIN_VALUE;
+        this.paragraphMinLength = Integer.MIN_VALUE;
+        this.paragraphAvgLength = Integer.MIN_VALUE;
+        this.wordFrequency = null;
+        this.paragraphs = null;
+    }
+
+    public Document(String content) {
+        this.content = content;
+        this.paragraphCount = Integer.MIN_VALUE;
+        this.paragraphMaxLength = Integer.MIN_VALUE;
+        this.paragraphMinLength = Integer.MIN_VALUE;
+        this.paragraphAvgLength = Integer.MIN_VALUE;
+        this.wordFrequency = null;
+        this.paragraphs = null;
+        splitByParagraphs();
+    }
+
+
     public void setParagraphCount(Integer paragraphCount) {
         this.paragraphCount = paragraphCount;
     }
@@ -42,27 +64,6 @@ public class Document {
 
     public void setParagraphs(ArrayList<String> paragraphs) {
         this.paragraphs = paragraphs;
-    }
-
-    public Document() {
-        this.content = null;
-        this.paragraphCount = Integer.MIN_VALUE;
-        this.paragraphMaxLength = Integer.MIN_VALUE;
-        this.paragraphMinLength = Integer.MIN_VALUE;
-        this.paragraphAvgLength = Integer.MIN_VALUE;
-        this.wordFrequency = null;
-        this.paragraphs = null;
-    }
-
-    public Document(String content) {
-        this.content = content;
-        this.paragraphCount = Integer.MIN_VALUE;
-        this.paragraphMaxLength = Integer.MIN_VALUE;
-        this.paragraphMinLength = Integer.MIN_VALUE;
-        this.paragraphAvgLength = Integer.MIN_VALUE;
-        this.wordFrequency = null;
-        this.paragraphs = null;
-        splitByParagraphs();
     }
 
     public Integer getParagraphCount() {

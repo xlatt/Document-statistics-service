@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import spark.Request;
-import spark.Response;
 
 public abstract class TextProcessor {
     protected TextExtractor textExtractor;
@@ -26,12 +25,12 @@ public abstract class TextProcessor {
     protected static final String TEXT_PLAIN = "text/plain";
     protected static final String TEXT_WORD  = "text/word";
 
-    protected static final String PARAGRAPH_COUNT = "ParagraphCount";
+    protected static final String PARAGRAPH_COUNT   = "ParagraphCount";
     protected static final String PARAGRAPH_LEN_MAX = "ParagraphLengthMax";
     protected static final String PARAGRAPH_LEN_MIN = "ParagraphLengthMin";
     protected static final String PARAGRAPH_LEN_AVG = "ParagraphLengthAvg";
-    protected static final String WORD_FREQUENCY = "WordFrequency";
-    protected static final String DOCUMENT_UUID = "Uuid";
+    protected static final String WORD_FREQUENCY    = "WordFrequency";
+    protected static final String DOCUMENT_UUID     = "Uuid";
 
     protected SimpleBeanPropertyFilter propertyFilter;
     protected FilterProvider excp;
@@ -52,6 +51,12 @@ public abstract class TextProcessor {
         logger = LoggerFactory.getLogger(TextProcessor.class);
     }
 
+    public String toJson(String name, String value) {
+        ObjectNode objectNode1 = mapper.createObjectNode();
+        objectNode1.put(name, value);
+        return objectNode1.toString();
+    }
+
     protected Document extractByContent(Request request, String type) throws IOException {
         Document document;
 
@@ -62,7 +67,8 @@ public abstract class TextProcessor {
             String content = request.body();
             document = new Document(content);
         } else {
-            logger.warn("[WARN] Unrecognized type of document. Trying extraction by Tika.");
+            logger.warn("Unrecognized type '{}' of document. Trying extraction by Tika.", type);
+
             String content = textExtractor.bytesToText(request.bodyAsBytes());
             document = new Document(content);
         }
@@ -73,12 +79,6 @@ public abstract class TextProcessor {
     protected Document createDocument(Request request) throws IOException {
         String contentType = request.headers("Content-Type");
         return extractByContent(request, contentType);
-    }
-
-    public String toJson(String name, String value) {
-        ObjectNode objectNode1 = mapper.createObjectNode();
-        objectNode1.put(name, value);
-        return objectNode1.toString();
     }
 
     public Object parseAll(Document document) throws IOException {
@@ -98,7 +98,7 @@ public abstract class TextProcessor {
 
     public Object paragraphLengthMax(Document document) {
         String val =  document.parseParagraphMaxLength().toString();
-        return  toJson(PARAGRAPH_LEN_MAX, val);
+        return toJson(PARAGRAPH_LEN_MAX, val);
     }
 
     public Object paragraphLengthMin(Document document) {

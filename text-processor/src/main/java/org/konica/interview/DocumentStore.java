@@ -83,7 +83,6 @@ public class DocumentStore {
         db.updateOne(new Document("id", uuid.toString()), new Document("$set", new Document("content", doc)), new UpdateOptions().upsert(true));
     }
 
-
     public boolean delete(UUID uuid) {
         return cache.delete(uuid) || deleteFromDb(uuid);
     }

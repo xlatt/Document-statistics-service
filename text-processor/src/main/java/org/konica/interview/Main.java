@@ -95,27 +95,3 @@ public class Main {
         }
     }
 }
-
-/**
- *
- *
- * PUT /stats/paragraph/count
- * PUT /stats/paragraph/length/max
- * PUT /stats/paragraph/length/min
- * PUT /stats/paragraph/length/avg
- *
- * PUT /stats/paragraph/word/frequency
- *
- *
- * POST /document -> returns doc ID
- *
- * GET /document/:id/paragraph/count
- * GET /document/:id/paragraph/length/max
- * GET /document/:id/paragraph/length/min
- * GET /document/:id/paragraph/length/avg
- *
- * GET /document/:id/word/frequency
- *
- * DELETE /document/{id}
- *
- * */
