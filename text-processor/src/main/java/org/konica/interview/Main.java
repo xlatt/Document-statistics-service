@@ -12,15 +12,22 @@ import java.io.IOException;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
+import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
+import static spark.Spark.threadPool;
 
 public class Main {
     private static String textExtractorUrl = "http://localhost:9998/tika";
     private static String documentStoreUrl = "mongodb://localhost:27017";
+    private static Integer threadCount;
+    private static Integer sparkPort;
 
     public static void main(String[] args) throws IOException {
         processArgs(args);
+
+        port(sparkPort);
+        threadPool(threadCount);
 
         BasicTextProcessor basicTextProcessor = new BasicTextProcessor(textExtractorUrl);
         PersistentTextProcessor persistentTextProcessor = new PersistentTextProcessor(textExtractorUrl, documentStoreUrl);
@@ -53,6 +60,14 @@ public class Main {
         output.setRequired(true);
         options.addOption(output);
 
+        Option threads = new Option("w", "workers", true, "Number of threads for Spark");
+        threads.setRequired(false);
+        options.addOption(threads);
+
+        Option port = new Option("p", "port", true, "Listening port. Default: 4567");
+        port.setRequired(false);
+        options.addOption(port);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -61,6 +76,12 @@ public class Main {
             cmd = parser.parse(options, args);
             textExtractorUrl = cmd.getOptionValue("tika");
             documentStoreUrl = cmd.getOptionValue("database");
+
+            String w = cmd.getOptionValue("workers");
+            threadCount = w == null ? new Integer(4) : new Integer(w);
+
+            String p = cmd.getOptionValue("port");
+            sparkPort = p == null ? new Integer(4567) : new Integer(p);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             formatter.printHelp("text-processor", options);
