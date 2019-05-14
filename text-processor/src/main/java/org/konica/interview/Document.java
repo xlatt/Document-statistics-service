@@ -78,6 +78,10 @@ public class Document {
         return wordFrequency;
     }
 
+    public ArrayList<String> getParagraphs(){
+        return paragraphs;
+    }
+
     private void splitByParagraphs() {
         if (content == null)
             return;
