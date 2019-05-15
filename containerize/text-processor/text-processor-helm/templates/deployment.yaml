@@ -35,8 +35,8 @@ spec:
           #   httpGet:
           #     path: /document
           #     port: 4567
-          command: ["/bin/sh"]
-          #args: ["-jar", "text-processor-1.0-SNAPSHOT-all.jar"]
+          command: ["java"]
+          args: ["-jar", "text-processor-1.0-SNAPSHOT-all.jar", "-t", "172.17.0.6:4567", "-db", "mongo://172.17.0.10:27017"]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
