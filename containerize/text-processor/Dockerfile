@@ -8,10 +8,14 @@ RUN apk fetch openjdk8
 RUN apk add openjdk8
 RUN apk add wget
 
-COPY text-processor .
-gradle fatJar
+COPY ./text-processor .
+RUN gradle build
+RUN gradle fatJar
 
 FROM openjdk:8-jre
-COPY --from=build text-processor-1.0.jar .
+COPY --from=build /build/libs/text-processor-1.0-SNAPSHOT-all.jar .
+
+EXPOSE 4567
+
 ENTRYPOINT ["java"]
-CMD ["-jar", "text-processor-1.0.jar"]
+CMD ["-jar", "text-processor-1.0-SNAPSHOT-all.jar"]
