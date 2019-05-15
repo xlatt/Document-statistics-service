@@ -6,15 +6,20 @@ replicaCount: 1
 
 image:
   repository: pbur/text-processor
-  tag: latest
-  pullPolicy: IfNotPresent
+  tag: dbti
+  pullPolicy: Always
 
-nameOverride: ""
+nameOverride: "service"
 fullnameOverride: ""
 
+arguments:
+  tika: "http://tika-service:9998"
+  db: "mongodb://mongodb-service:27017"
+
 service:
-  type: ClusterIP
+  type: NodePort
   port: 4567
+  targetPort: 4567
 
 ingress:
   enabled: false

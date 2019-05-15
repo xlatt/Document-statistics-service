@@ -18,4 +18,4 @@ COPY --from=build /build/libs/text-processor-1.0-SNAPSHOT-all.jar .
 EXPOSE 4567
 
 ENTRYPOINT ["java"]
-CMD ["-jar", "text-processor-1.0-SNAPSHOT-all.jar"]
+CMD ["-jar", "text-processor-1.0-SNAPSHOT-all.jar", "-t", "http://172.17.0.6:9998", "-db", "mongodb://172.17.0.10:27017"]

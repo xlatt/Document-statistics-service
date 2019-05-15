@@ -9,7 +9,7 @@ image:
   tag: probes
   pullPolicy: Always
 
-nameOverride: ""
+nameOverride: "service"
 fullnameOverride: ""
 
 service:

@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 4567
               protocol: TCP
           # livenessProbe:
           #   httpGet:
@@ -36,7 +36,7 @@ spec:
           #     path: /document
           #     port: 4567
           command: ["java"]
-          args: ["-jar", "text-processor-1.0-SNAPSHOT-all.jar", "-t", "172.17.0.6:4567", "-db", "mongo://172.17.0.10:27017"]
+          args: ["-jar", "text-processor-1.0-SNAPSHOT-all.jar", "-t", "{{ .Values.arguments.tika }}", "-db", "{{ .Values.arguments.db }}"]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
