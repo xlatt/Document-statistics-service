@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pbur/text-processor
-  tag: dbti
+  tag: stable
   pullPolicy: Always
 
 nameOverride: "service"
