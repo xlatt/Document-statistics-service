@@ -54,11 +54,11 @@ send a file and use header "Content-type: text/[type]" to tell text-processor ho
 ### PUT
 
 ```
- PUT  /document/paragraph/count
- PUT  /document/paragraph/length/max
- PUT  /document/paragraph/length/min
- PUT  /document/paragraph/length/avg
- PUT  /document/paragraph/word/frequency
+ PUT    /document/paragraph/count
+ PUT    /document/paragraph/length/max
+ PUT    /document/paragraph/length/min
+ PUT    /document/paragraph/length/avg
+ PUT    /document/paragraph/word/frequency
 ```
 
 
