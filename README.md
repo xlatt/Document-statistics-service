@@ -86,8 +86,9 @@ Response contains UUID for document. This UUID can be used to reference stored d
 ```curl -X DELETE -T example_docs/example.plain http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
 
 For whole API list look in to **REST API** section. Accepted Content-type is one of:
-* text/plain  -> for plain text
-* text/pdf    -> for PDF files
-* text/word   -> for Word documents
-
+```
+text/plain  -> for plain text
+text/pdf    -> for PDF files
+text/word   -> for Word documents
+```
 [arch]: ./diag.png "Architecture"
