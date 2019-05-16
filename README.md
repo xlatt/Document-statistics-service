@@ -86,7 +86,7 @@ To deploy application using helm execute ```start_up.sh``` script. To delete all
 ## Examples
 
 ##### Upload plain text document and extract all statistics
-```curl -X PUT -T examples/example.plain http://[service]:[port]/document --header "Content-type: text/plain"```
+```curl -X PUT -T example_docs/example.plain http://[service]:[port]/document --header "Content-type: text/plain"```
 
 ##### Store plain text document
 Response contains UUID for document. This UUID can be used to reference stored document.
