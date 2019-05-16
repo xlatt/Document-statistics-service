@@ -7,13 +7,29 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/** Used for communication with Tika
+ *
+ * This sends documents to Tika service and receives content of documents
+ * in plain text.
+ */
 public class TextExtractor {
     private  URL url;
 
+    /**
+     * @param url URL of Tika
+     * @throws IOException
+     */
     public TextExtractor(String url) throws IOException {
         this.url = new URL(url);
     }
 
+    /**
+     * Send bytes (of document) to Tika for text extraction.
+     *
+     * @param bytes byte representation od document
+     * @return text which was extracted from document
+     * @throws IOException
+     */
     public String bytesToText(byte [] bytes) throws IOException {
         HttpURLConnection connection;
 

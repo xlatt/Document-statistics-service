@@ -10,6 +10,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Represents document. Holds content of document retrieved from TextExtractor.
+ * Holds logic for extracting statistics from document.
+ *
+ */
 @JsonFilter("Document")
 public class Document {
     private String content;
@@ -20,6 +25,9 @@ public class Document {
     private HashMap<String, Long> wordFrequency;
     private ArrayList<String> paragraphs;
 
+    /**
+     * Constructor for empty Document
+     */
     public Document() {
         this.content = null;
         this.paragraphCount = Integer.MIN_VALUE;
@@ -30,6 +38,10 @@ public class Document {
         this.paragraphs = null;
     }
 
+    /**
+     * Constructor for Document
+     * @param content holds content of document
+     */
     public Document(String content) {
         this.content = content;
         this.paragraphCount = Integer.MIN_VALUE;
@@ -42,54 +54,93 @@ public class Document {
     }
 
 
+    /**
+     * @param paragraphCount
+     */
     public void setParagraphCount(Integer paragraphCount) {
         this.paragraphCount = paragraphCount;
     }
 
+    /**
+     * @param paragraphMaxLength
+     */
     public void setParagraphMaxLength(Integer paragraphMaxLength) {
         this.paragraphMaxLength = paragraphMaxLength;
     }
 
+    /**
+     * @param paragraphMinLength
+     */
     public void setParagraphMinLength(Integer paragraphMinLength) {
         this.paragraphMinLength = paragraphMinLength;
     }
 
+    /**
+     * @param paragraphAvgLength
+     */
     public void setParagraphAvgLength(Integer paragraphAvgLength) {
         this.paragraphAvgLength = paragraphAvgLength;
     }
 
+    /**
+     * @param wordFrequency
+     */
     public void setWordFrequency(HashMap<String, Long> wordFrequency) {
         this.wordFrequency = wordFrequency;
     }
 
+    /**
+     * @param paragraphs
+     */
     public void setParagraphs(ArrayList<String> paragraphs) {
         this.paragraphs = paragraphs;
     }
 
+    /**
+     * @return paragraph count
+     */
     public Integer getParagraphCount() {
         return paragraphCount;
     }
 
+    /**
+     * @return length of the longest paragraph
+     */
     public Integer getParagraphMaxLength() {
         return paragraphMaxLength;
     }
 
+    /**
+     * @return length of the shortest paragraph
+     */
     public Integer getParagraphMinLength() {
         return paragraphMinLength;
     }
 
+    /**
+     * @return average length of the paragraph
+     */
     public Integer getParagraphAvgLength() {
         return paragraphAvgLength;
     }
 
+    /**
+     * @return list of word ordered in descending order with occasions counter
+     */
     public HashMap<String, Long> getWordFrequency() {
         return wordFrequency;
     }
 
+    /**
+     * @return array of paragraphs
+     */
     public ArrayList<String> getParagraphs(){
         return paragraphs;
     }
 
+    /**
+     * Split content to paragraphs
+     */
     private void splitByParagraphs() {
         if (content == null)
             return;
@@ -100,28 +151,49 @@ public class Document {
         paragraphs.removeIf(String::isEmpty);
     }
 
+    /**
+     * Count paragraphs
+     * @return paragraph count
+     */
     public Integer parseParagraphCount() {
         paragraphCount = paragraphs.size();
         return paragraphCount;
     }
 
+    /**
+     * Find the longest paragraph
+     * @return length of the longest paragraph
+     */
     public Integer parseParagraphMaxLength() {
         String longest = paragraphs.stream().max(Comparator.comparingInt(String::length)).get();
         paragraphMaxLength = longest.length();
         return paragraphMaxLength;
     }
 
+    /**
+     * Find the shortest paragraph
+     * @return length of the shortest paragraph
+     */
     public Integer parseParagraphMinLength() {
         String longest = paragraphs.stream().min(Comparator.comparingInt(String::length)).get();
         paragraphMinLength = longest.length();
         return paragraphMinLength;
     }
 
+    /**
+     * Find the average length of paragraph
+     * @return average length of the paragraph
+     */
     public Integer parseParagraphAvgLength() {
         paragraphAvgLength = paragraphs.stream().mapToInt(String::length).sum() / parseParagraphCount();
         return paragraphAvgLength;
     }
 
+    /**
+     * Count occurrences of particular word then sort by occurrences and store in reversed order.
+     *
+     * @return word frequency in descending order
+     */
     public HashMap<String, Long> parseWordFrequency() {
         wordFrequency = new HashMap<>();
 
