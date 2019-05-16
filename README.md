@@ -87,10 +87,10 @@ Response contains UUID for document. This UUID can be used to reference stored d
 ```curl -X POST -T example_docs/example.plain http://service:4567/document --header "Content-type: text/plain"```
 
 ##### Get all statistics from document which was stored by previous POST API call
-```curl -X GET -T example_docs/example.plain http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+```curl -X GET http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
 
 ##### Upload plain text document and extract all statistics
-```curl -X DELETE -T example_docs/example.plain http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+```curl -X DELETE http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
 
 For whole API list look in to **REST API** section. Accepted **Content-type** is one of:
 ```
