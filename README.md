@@ -59,5 +59,7 @@ database from which can be retrieved later.
  DELETE /document/:id
  ```
 
- ## Examples
+## Deploy
+
+## Examples
 [arch]: ./diag.png "Architecture"
