@@ -42,7 +42,7 @@ I implemented this cache just because I had this idea in mind and wanted to try 
 There are two ways how to interact with Text-processor. One is to upload document for statistics extraction and retrieve statistics using **HTTP PUT** method. If this method is used documented is uploaded, statistics are extracted and document is discarded. Another way is to use **HTTP POST, GET and DELETE** methods to **upload** document, **extract** statistics and **delete** document.
 When document is uploaded, first it is stored in cache and then it is stored in
 database from which can be retrieved later. **POST** and **PUT** methods has to
-send a file and use header "Content-type: text/<type>" to tell text-processor how to treat this document.
+send a file and use header "Content-type: text/<type>" to tell text-processor how to treat this document. Every response is formatted in **JSON**.
 
 ### PUT
 
