@@ -19,7 +19,7 @@ and assure that statistics are parsed and then retrieve those statistics back to
 * Paragraph average length
 * Word frequency in descending order
 
-Apache Tika is used as text extractor as it was suggested in assignment. Reasoning for using database is explained in **Database** section.
+Apache Tika is used as text extractor as it was suggested in assignment. Reasoning for using database is explained in **Database** section. From all REST server frameworks I looked into, Spark seems to be the one with the least effort needed to start working with it and least resources foot print and it still offers variety of functions.
 
 
 
