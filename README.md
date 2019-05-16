@@ -31,7 +31,7 @@ is easier to store this document in this service and assign UUID for this docume
 I selected MongoDB for storage because NoSQL databases are good fit for storing unstructured data and it was easy to setup and work with.
 
 ###### Cache
-In scenario where multiple services access document, excessive communication with database needs to be avoided. To solve this issue cache like system is introduced to mitigate database inserts and selects. First, when document is uploaded, it is stored in this cache in which can reside for 5 seconds. When document is stored in cache for more than 5 seconds without being read/written to it is deleted from this cache and stored in database.
+In scenario where multiple services access document, excessive communication with database needs to be avoided. To solve this issue cache like system is introduced to mitigate database inserts and selects. First, when document is uploaded, it is stored in this cache in which it can reside for 5 seconds. When document is stored in cache for more than 5 seconds without being read/written to it is deleted from this cache and stored in database.
 
 I implemented this cache just because I had this idea in mind and wanted to try it and see how it behaves. Also I wanted to have control over which and when documents are stored in database. In production it would be more than wise to use Redis or similar system.
 
@@ -65,6 +65,7 @@ send a file and use header "Content-type: text/<type>" to tell text-processor ho
  ```
 
 ## Deploy
+To deploy application using helm execute ```start_up.sh``` script. To delete all resources execute ```tear_down.sh```. Text-processor pod has ```NodePort``` which can be used for external communication. Tika server and MongoDB are using ```ClusterIP``` for cluster only communication. In production load balancer cloud be introduced for relying external traffic in to cluster. Or ```ClusterIP``` could be used if this service would be used only withing the cluster.
 
 ## Examples
 [arch]: ./diag.png "Architecture"
