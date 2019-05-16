@@ -12,6 +12,9 @@ image:
 nameOverride: "service"
 fullnameOverride: ""
 
+container:
+  port: 9998
+
 service:
   type: ClusterIP
   port: 9998

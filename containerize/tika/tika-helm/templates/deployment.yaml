@@ -25,16 +25,16 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 9998
+              containerPort: {{ .Values.container.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /tika
-              port: 9998
+              port: {{ .Values.container.port }}
           readinessProbe:
             httpGet:
               path: /tika
-              port: 9998
+              port: {{ .Values.container.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
