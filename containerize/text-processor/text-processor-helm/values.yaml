@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: pbur/text-processor
   tag: stable
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 nameOverride: "service"
 fullnameOverride: ""
