@@ -79,18 +79,18 @@ To deploy application using helm execute ```start_up.sh``` script. To delete all
 ## Examples
 
 ##### Upload plain text document and extract all statistics
-```curl -X PUT -T examples/example.plain http://service:4567/document --header "Content-type: text/plain"```
+```curl -X PUT -T examples/example.plain http://[service]:[port]/document --header "Content-type: text/plain"```
 
 ##### Store plain text document
 Response contains UUID for document. This UUID can be used to reference stored document.
 
-```curl -X POST -T example_docs/example.plain http://service:4567/document --header "Content-type: text/plain"```
+```curl -X POST -T example_docs/example.plain http://[service]:[port]/document --header "Content-type: text/plain"```
 
 ##### Get all statistics from document which was stored by previous POST API call
-```curl -X GET http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+```curl -X GET http://[service]:[port]/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
 
-##### Upload plain text document and extract all statistics
-```curl -X DELETE http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+##### Upload plain   text document and extract all statistics
+```curl -X DELETE http://[service]:[port]/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
 
 For whole API list look in to **REST API** section. Accepted **Content-type** is one of:
 ```
