@@ -13,7 +13,7 @@ nameOverride: "service"
 fullnameOverride: ""
 
 arguments:
-  tika: "http://tika-service:9998"
+  tika: "http://tika-service:9998/tika"
   db: "mongodb://mongodb-service:27017"
 
 service:
