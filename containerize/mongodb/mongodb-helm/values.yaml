@@ -12,6 +12,9 @@ image:
 nameOverride: "service"
 fullnameOverride: ""
 
+container:
+  port: 27017
+
 service:
   type: ClusterIP
   port: 27017
