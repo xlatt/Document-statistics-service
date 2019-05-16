@@ -65,11 +65,18 @@ send a file and use header "Content-type: text/[type]" to tell text-processor ho
 ### POST
 ```
  POST   /document
+ ```
+
+ ### GET
+ ```
  GET    /document/:id/paragraph/count
  GET    /document/:id/paragraph/length/max
  GET    /document/:id/paragraph/length/min
  GET    /document/:id/paragraph/length/avg
  GET    /document/:id/word/frequency
+```
+### DELETE
+```
  DELETE /document/:id
  ```
 
