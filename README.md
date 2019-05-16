@@ -65,7 +65,7 @@ send a file and use header "Content-type: text/<type>" to tell text-processor ho
  ```
 
 ## Deploy
-To deploy application using helm execute ```start_up.sh``` script. To delete all resources execute ```tear_down.sh```. Text-processor pod has ```NodePort``` which can be used for external communication. Tika server and MongoDB are using ```ClusterIP``` for cluster only communication. In production load balancer cloud be introduced for relying external traffic in to cluster. Or ```ClusterIP``` could be used if this service would be used only withing the cluster.
+To deploy application using helm execute ```start_up.sh``` script. To delete all resources execute ```tear_down.sh```. Text-processor pod has ```NodePort``` which can be used for external communication. Tika server and MongoDB are using ```ClusterIP``` for cluster only communication. In production load balancer cloud be introduced for relying external traffic in to cluster. Or ```ClusterIP``` could be used if this service would be used only within the cluster.
 
 ## Examples
 [arch]: ./diag.png "Architecture"
