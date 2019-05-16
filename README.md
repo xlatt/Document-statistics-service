@@ -3,10 +3,11 @@
 Upload Word, PDF or plain text document and get back statistics.
 Can run in Kubernetes and interact via REST API.
 
-* Overview
-* REST API
-* Deployment
-* Examples
+
+* [Overview](#text-processor)
+* [REST API](##rest-api)
+* [Deployment](##deployment)
+* [Examples](#examples)
 
 ## Overview
 
