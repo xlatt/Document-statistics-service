@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: pbur/mytika
-  tag: probes
+  repository: pbur/tika
+  tag: stable
   pullPolicy: Always
 
 nameOverride: "service"
