@@ -5,8 +5,8 @@ Can run in Kubernetes and interact via REST API.
 
 
 * [Overview](#text-processor)
-* [REST API](##rest-api)
-* [Deployment](##deployment)
+* [REST API](#rest-api)
+* [Deployment](#deployment)
 * [Examples](#examples)
 
 ## Overview
