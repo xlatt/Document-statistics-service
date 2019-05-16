@@ -21,6 +21,8 @@ and assure that statistics are parsed and then retrieve those statistics back to
 
 Apache Tika is used as text extractor as it was suggested in assignment. Reasoning for using database is explained in **Database** section.
 
+
+
 #### Tika server
 Text retrieved from Apache Tika is in plain text format. At first, using XHTML formatted text seemed as good option because of tagging used in parsed text but after short investigation I noticed that tagging was not consistent between document types so instead I used plain text format which is uniform across different document types. Communication with Tika is handled by TextExtractor.java. No 3rd party frameworks and libraries are used to accomplish communication with Tika since only PUT method is used to upload documents for extraction. For communication with database MongoDB driver for Java is used.
 
@@ -68,4 +70,24 @@ send a file and use header "Content-type: text/<type>" to tell text-processor ho
 To deploy application using helm execute ```start_up.sh``` script. To delete all resources execute ```tear_down.sh```. Text-processor pod has ```NodePort``` which can be used for external communication. Tika server and MongoDB are using ```ClusterIP``` for cluster only communication. In production load balancer cloud be introduced for relying external traffic in to cluster. Or ```ClusterIP``` could be used if this service would be used only within the cluster.
 
 ## Examples
+
+##### Upload plain text document and extract all statistics
+```curl -X PUT -T examples/example.plain http://service:4567/document --header "Content-type: text/plain"```
+
+##### Store plain text document
+Response contains UUID for document. This UUID can be used to reference stored document.
+
+```curl -X POST -T examples/example.plain http://service:4567/document --header "Content-type: text/plain"```
+
+##### Get all statistics from document which was stored by previous POST API call
+```curl -X GET -T examples/example.plain http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+
+##### Upload plain text document and extract all statistics
+```curl -X DELETE -T examples/example.plain http://service:4567/document/da78c12b-b2ef-472b-804f-97f591ce27ad```
+
+For whole API list look in to **REST API** section. Accepted Content-type is one of:
+* text/plain  -> for plain text
+* text/pdf    -> for PDF files
+* text/word   -> for Word documents
+
 [arch]: ./diag.png "Architecture"
