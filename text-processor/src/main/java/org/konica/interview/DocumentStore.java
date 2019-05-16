@@ -84,7 +84,10 @@ public class DocumentStore {
     }
 
     public boolean delete(UUID uuid) {
-        return cache.delete(uuid) || deleteFromDb(uuid);
+        boolean cd = cache.delete(uuid);
+        boolean dd = deleteFromDb(uuid);
+
+        return cd || dd;
     }
 
     private boolean deleteFromDb(UUID uuid) {
