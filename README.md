@@ -8,6 +8,7 @@ Can run in Kubernetes and interact via REST API.
 * [REST API](#rest-api)
 * [Deployment](#deployment)
 * [Examples](#examples)
+* [Possible improvements](#what-can-be-improved)
 
 ## Overview
 
