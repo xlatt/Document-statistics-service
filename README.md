@@ -102,5 +102,6 @@ text/word   -> for Word documents
 ## What can be improved
 
 If usage of database would seem as beneficial for this type of service, proper integration with Kubernetes can be achieved. Instead of using Java MongoDB client, pod would request for storage using Persistent Volume Claim. Production tested cache system could be used and also error handling of text-processor could be improved.
+Also, tests are kind of missing.
 
 [arch]: ./diag.png "Architecture"
