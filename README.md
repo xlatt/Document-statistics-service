@@ -3,6 +3,11 @@
 Upload Word, PDF or plain text document and get back statistics.
 Can run in Kubernetes and interact via REST API.
 
+* Overview
+* REST API
+* Deployment
+* Examples
+
 ## Overview
 
 Document statistics service consist of 3 applications running as independent services.
