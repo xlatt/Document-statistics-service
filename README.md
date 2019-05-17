@@ -18,7 +18,7 @@ Document statistics service consist of 3 applications running as independent ser
 
 #### Text processor
 Text processor is central part of this system. It's role is to receive documents
-and assure that statistics are parsed and then retrieve those statistics back to client. It is using [spark](http://sparkjava.com/) micro framework as REST server. It can process Word, PDF and plain text documents. Statistics which can be retrieved are:
+and assure that statistics are parsed and then provide those statistics back to client. It is using [spark](http://sparkjava.com/) micro framework as REST server. It can process Word, PDF and plain text documents. Statistics which can be extracted are:
 
 * Paragraph count
 * Paragraph maximum length
